@@ -19,21 +19,26 @@ include_directories (
 )
 
 find_library(MQTT3A_LIBRARY
-    NAMES paho-mqtt3a libpaho-mqtt3a
+    NAMES paho-mqtt3a
     HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3AS_LIBRARY
-    NAMES paho-mqtt3as libpaho-mqtt3as
+    NAMES paho-mqtt3as
     HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3C_LIBRARY
-    NAMES paho-mqtt3c libpaho-mqtt3c
+    NAMES paho-mqtt3c
     HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3CS_LIBRARY
-    NAMES paho-mqtt3cs libpaho-mqtt3cs
+    NAMES paho-mqtt3cs
     HINTS "$ENV{PAHO_HOME}/lib/"
 )
+
+message(STATUS "MQTT3A_LIBRARY: ${MQTT3A_LIBRARY}")
+message(STATUS "MQTT3AS_LIBRARY: ${MQTT3AS_LIBRARY}")
+message(STATUS "MQTT3C_LIBRARY: ${MQTT3C_LIBRARY}")
+message(STATUS "MQTT3CS_LIBRARY: ${MQTT3CS_LIBRARY}")
 
 file(DOWNLOAD "https://github.com/KxSystems/kdb/raw/master/c/c/k.h" "${CMAKE_BINARY_DIR}/k.h" )
 
@@ -43,6 +48,7 @@ if (MSVC)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /D WIN32_LEAN_AND_MEAN /D _CRT_SECURE_NO_WARNINGS /D _CRT_NONSTDC_NO_DEPRECATE /D _WINSOCK_DEPRECATED_NO_WARNINGS") 
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W3 /D WIN32_LEAN_AND_MEAN /D _CRT_SECURE_NO_WARNINGS /D _CRT_NONSTDC_NO_DEPRECATE /D _WINSOCK_DEPRECATED_NO_WARNINGS")
 else()
+    set(LINK_LIBS "")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-strict-aliasing")
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-strict-aliasing")
 endif()
@@ -57,7 +63,7 @@ endif()
 target_link_libraries(${MY_LIBRARY_NAME} ${MQTT3A_LIBRARY} ${MQTT3AS_LIBRARY} ${MQTT3C_LIBRARY} ${MQTT3CS_LIBRARY} ${LINK_LIBS})
 set_target_properties(${MY_LIBRARY_NAME} PROPERTIES PREFIX "")
 
-install(FILES README.md install.sh install.bat mqtt.q DESTINATION ${PROJECT_BINARY_DIR}/mqtt/)
+install(FILES README.md install.sh install.bat DESTINATION ${PROJECT_BINARY_DIR}/mqtt/)
 install(DIRECTORY examples DESTINATION ${PROJECT_BINARY_DIR}/mqtt)
 install(DIRECTORY script DESTINATION ${PROJECT_BINARY_DIR}/mqtt)
 install(TARGETS ${MY_LIBRARY_NAME} DESTINATION ${PROJECT_BINARY_DIR}/mqtt/lib OPTIONAL)
