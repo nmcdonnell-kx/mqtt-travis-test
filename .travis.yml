@@ -6,6 +6,9 @@ os:
   - osx
   - windows
 
+stage:
+  - build Release
+  
 jobs:
   include:
 
