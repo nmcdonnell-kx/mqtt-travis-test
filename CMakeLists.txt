@@ -11,28 +11,28 @@ set_source_files_properties(${SRC_FILES} PROPERTIES LANGUAGE C)
 
 message(STATUS "Generator : ${CMAKE_GENERATOR}")
 message(STATUS "Build Tool : ${CMAKE_BUILD_TOOL}")
-message(STATUS "Paho MQTT API : $ENV{MQTT_API_DIR}")
+message(STATUS "Paho MQTT API : $ENV{PAHO_HOME}")
 
 include_directories (
-    $ENV{MQTT_API_DIR}/include 
+    $ENV{PAHO_HOME}/include 
     ${CMAKE_BINARY_DIR} # For 'k.h', downloaded below
 )
 
 find_library(MQTT3A_LIBRARY
     NAMES paho-mqtt3a libpaho-mqtt3a
-    HINTS "$ENV{MQTT_API_DIR}/lib/"
+    HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3AS_LIBRARY
     NAMES paho-mqtt3as libpaho-mqtt3as
-    HINTS "$ENV{MQTT_API_DIR}/lib/"
+    HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3C_LIBRARY
     NAMES paho-mqtt3c libpaho-mqtt3c
-    HINTS "$ENV{MQTT_API_DIR}/lib/"
+    HINTS "$ENV{PAHO_HOME}/lib/"
 )
 find_library(MQTT3CS_LIBRARY
     NAMES paho-mqtt3cs libpaho-mqtt3cs
-    HINTS "$ENV{MQTT_API_DIR}/lib/"
+    HINTS "$ENV{PAHO_HOME}/lib/"
 )
 
 file(DOWNLOAD "https://github.com/KxSystems/kdb/raw/master/c/c/k.h" "${CMAKE_BINARY_DIR}/k.h" )
