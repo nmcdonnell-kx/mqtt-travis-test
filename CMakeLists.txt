@@ -35,11 +35,6 @@ find_library(MQTT3CS_LIBRARY
     HINTS "$ENV{PAHO_HOME}/lib/"
 )
 
-message(STATUS "MQTT3A_LIBRARY: ${MQTT3A_LIBRARY}")
-message(STATUS "MQTT3AS_LIBRARY: ${MQTT3AS_LIBRARY}")
-message(STATUS "MQTT3C_LIBRARY: ${MQTT3C_LIBRARY}")
-message(STATUS "MQTT3CS_LIBRARY: ${MQTT3CS_LIBRARY}")
-
 file(DOWNLOAD "https://github.com/KxSystems/kdb/raw/master/c/c/k.h" "${CMAKE_BINARY_DIR}/k.h" )
 
 if (MSVC)
