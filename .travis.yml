@@ -14,6 +14,15 @@ env:
 before_install: 
   - chmod +x travis_setup.sh
   - ./travis_setup.sh
+  - if [ $TRAVIS_OS_NAME = linux ]; then 
+      QLIBDIR=l64; 
+    elif [ $TRAVIS_OS_NAME = osx ]; then 
+      QLIBDIR=m64; 
+    elif [ $TRAVIS_OS_NAME = windows ]; then
+      QLIBDIR=w64
+    else; 
+      echo "unknown OS ('$TRAVIS_OS_NAME')" >&2; exit 1; 
+    fi; export QLIBDIR
   - export QHOME=$(pwd)/q && export PATH=$QHOME/$QLIBDIR:$PATH
   - mkdir build
   - cd build
@@ -27,13 +36,13 @@ install:
   # version is the same.
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O miniconda.sh;
-      bash miniconda.sh -b -p $HOME/miniconda
+      bash miniconda.sh -b -p $HOME/miniconda;
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-MacOSX-x86_64.sh -O miniconda.sh;
-      bash miniconda.sh -b -p $HOME/miniconda
-    else
+      bash miniconda.sh -b -p $HOME/miniconda;
+    else;
       wget https://repo.anaconda.com/miniconda/Miniconda2-4.5.4-Windows-x86_64.exe -O miniconda.exe;
-      miniconda.exe -b -p $HOME/miniconda
+      ./miniconda.exe -b -p $HOME/miniconda;
     fi
   # bash miniconda.sh -b -p $HOME/miniconda
   - ls /usr/local/lib
@@ -51,7 +60,7 @@ install:
       QLIBDIR=m64; 
     elif [ $TRAVIS_OS_NAME = windows ]; then
       QLIBDIR=w64
-    else 
+    else; 
       echo "unknown OS ('$TRAVIS_OS_NAME')" >&2; exit 1; 
     fi; export QLIBDIR
   - conda install -c kx embedpy # grab kdb+ with conda
