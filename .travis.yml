@@ -14,18 +14,28 @@ env:
 before_install: 
   - chmod +x travis_setup.sh
   - ./travis_setup.sh
+  - export QHOME=$(pwd)/q && export PATH=$QHOME/$QLIBDIR:$PATH
+  - mkdir build
+  - cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ..
+  - cmake --build . --config Release
+  - cmake --install . --config Release
+  - cd ..
 
 install:
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda
     elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-MacOSX-x86_64.sh -O miniconda.sh;
+      bash miniconda.sh -b -p $HOME/miniconda
     else
-      wget https://repo.anaconda.com/miniconda/Miniconda2-4.5.4-Windows-x86_64.exe -O miniconda.sh;
+      wget https://repo.anaconda.com/miniconda/Miniconda2-4.5.4-Windows-x86_64.exe -O miniconda.exe;
+      miniconda.exe -b -p $HOME/miniconda
     fi
-  - bash miniconda.sh -b -p $HOME/miniconda
+  # bash miniconda.sh -b -p $HOME/miniconda
   - ls /usr/local/lib
   - export PATH="$HOME/miniconda/bin:$PATH"
   - echo $LD_LIBRARY_PATH
@@ -50,10 +60,7 @@ install:
   - if [[ "x$QLIC_KC" != "x" ]]; then
       echo -n $QLIC_KC |base64 --decode > q/kc.lic;
     fi
-  - mkdir build
-  - cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release .. && cmake --build . --config Release && cmake --install . --config Release
-  - cd ..
+
 
 script:
 - echo "Preparing version $TRAVIS_BRANCH-$TRAVIS_COMMIT"

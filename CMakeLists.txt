@@ -66,9 +66,7 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
   set(BITNESS 64)
 endif()
 
-# Minimum build/install move binary and q-script to $QHOME & $QHOME/<QARCH>
-install(TARGETS ${MY_LIBRARY_NAME} DESTINATION "$ENV{QHOME}/${OSFLAG}${BITNESS}/" CONFIGURATIONS MinSizeRel Release)
-install(FILES hdf5.q DESTINATION "$ENV{QHOME}" CONFIGURATIONS MinSizeRel Release)
+message(STATUS "Installing package to : ${PROJECT_BINARY_DIR}/hdf5")
 
 # Required objects for release packaging
 install(FILES LICENSE DESTINATION ${PROJECT_BINARY_DIR}/hdf5 CONFIGURATIONS Release)
@@ -77,3 +75,11 @@ install(DIRECTORY examples DESTINATION ${PROJECT_BINARY_DIR}/hdf5 CONFIGURATIONS
 install(FILES ${INSTALL_SCRIPT} DESTINATION ${PROJECT_BINARY_DIR}/hdf5 CONFIGURATIONS Release)
 install(FILES hdf5.q DESTINATION ${PROJECT_BINARY_DIR}/hdf5 CONFIGURATIONS Release)
 install(TARGETS ${MY_LIBRARY_NAME} DESTINATION ${PROJECT_BINARY_DIR}/hdf5/lib CONFIGURATIONS Release)
+
+message(STATUS "Installing to q : $ENV{QHOME}/${OSFLAG}${BITNESS}/")
+
+# Minimum build/install move binary and q-script to $QHOME & $QHOME/<QARCH>
+install(TARGETS ${MY_LIBRARY_NAME} DESTINATION "$ENV{QHOME}/${OSFLAG}${BITNESS}/" CONFIGURATIONS MinSizeRel Release)
+install(FILES hdf5.q DESTINATION "$ENV{QHOME}" CONFIGURATIONS MinSizeRel Release)
+
+
