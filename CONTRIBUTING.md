@@ -42,11 +42,11 @@ In order to have your pull request approved in a timely manner, please provide c
 
 ### Additional Resources
 
-[Eclipse Paho MQTT C client](https://github.com/eclipse/paho.mqtt.c)
+[Outline of HDF5 data format](https://support.hdfgroup.org/HDF5/whatishdf5.html)
 
-[MQTT Community site](http://mqtt.org/)
+[HDF5 C api home page](https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html)
 
-[Mosquitto MQTT broker](https://mosquitto.org/download/) 
+[HDF5 C api examples](https://support.hdfgroup.org/HDF5/examples/api-c.html)
 
 [KDB+ and q documentation](https://code.kx.com/q/)
 
