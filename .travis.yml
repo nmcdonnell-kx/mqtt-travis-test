@@ -20,7 +20,7 @@ before_install:
       QLIBDIR=m64; 
     elif [ $TRAVIS_OS_NAME = windows ]; then
       QLIBDIR=w64;
-    else; 
+    else 
       echo "unknown OS ('$TRAVIS_OS_NAME')" >&2; exit 1; 
     fi; export QLIBDIR
   - export QHOME=$(pwd)/q && export PATH=$QHOME/$QLIBDIR:$PATH
@@ -61,7 +61,7 @@ install:
       QLIBDIR=m64; 
     elif [ $TRAVIS_OS_NAME = windows ]; then
       QLIBDIR=w64;
-    else; 
+    else
       echo "unknown OS ('$TRAVIS_OS_NAME')" >&2; exit 1; 
     fi; export QLIBDIR
   - conda install -c kx embedpy # grab kdb+ with conda
