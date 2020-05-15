@@ -8,7 +8,7 @@ IF(NOT CMAKE_BUILD_TYPE)
    SET(CMAKE_BUILD_TYPE MinSizeRel)
 ENDIF()
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 project(hdf5 C)
 
 set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -DKXVER=3")
