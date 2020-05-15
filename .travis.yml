@@ -35,7 +35,7 @@ before_install:
       cmake --install . --config Release;
     else
       cmake -DCMAKE_BUILD_TYPE=Release ..;
-      make && make install
+      make && make install;
     fi
   - cd ..
 
