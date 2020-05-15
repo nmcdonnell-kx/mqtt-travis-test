@@ -41,10 +41,12 @@ before_install:
 install:
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O miniconda.sh;
+    elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
       wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-MacOSX-x86_64.sh -O miniconda.sh;
     else
-      wget https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O miniconda.sh;
+      echo "Miniconda script not available for OS ('$TRAVIS_OS_NAME')" >&2; exit 1;
     fi
   - bash miniconda.sh -b -p $HOME/miniconda
   - ls /usr/local/lib

@@ -28,10 +28,6 @@ find_library(HDF5_LIBRARY
     HINTS "$ENV{HDF5_HOME}/lib/" 
 )
 
-# cmake -DCMAKE_INSTALL_PREFIX="C:/Git/hdf5-1.12.0/cmake/install" -DBUILD_SHARED_LIBS=ON ..
-# cmake --build . --config Release
-# cmake --install . --config Release
-
 if (MSVC)
     file(DOWNLOAD "https://github.com/KxSystems/kdb/raw/master/w64/q.lib" "${CMAKE_BINARY_DIR}/q.lib" )
     set(LINK_LIBS "${CMAKE_BINARY_DIR}/q.lib")
