@@ -16,7 +16,7 @@ else # install from source
     mkdir cmake && cd cmake
     export HDF5_HOME=$TRAVIS_BUILD_DIR/hdf5_install
     mkdir $HDF5_HOME
-    cmake -DCMAKE_INSTALL_PREFIX=$HDF5_HOME ..
+    cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=$HDF5_HOME ..
     cmake --build . --config Release
     cmake --install . --config Release
     cd ..
