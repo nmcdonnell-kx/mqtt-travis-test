@@ -18,7 +18,7 @@ else # install from source
     mkdir $HDF5_HOME
     cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=$HDF5_HOME ..
     cmake --build . --config Release
-    cmake --install . --config Release
+    cmake --build . --config Release --target install
     cd ..
   fi
   cd ..
