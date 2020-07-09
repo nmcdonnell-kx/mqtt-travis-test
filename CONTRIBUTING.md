@@ -42,11 +42,11 @@ In order to have your pull request approved in a timely manner, please provide c
 
 ### Additional Resources
 
-[Outline of HDF5 data format](https://support.hdfgroup.org/HDF5/whatishdf5.html)
+[Language Guide (proto3)](https://developers.google.com/protocol-buffers/docs/proto3)
 
-[HDF5 C api home page](https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html)
+[Protocol Buffer Basics: C++](https://developers.google.com/protocol-buffers/docs/cpptutorial)
 
-[HDF5 C api examples](https://support.hdfgroup.org/HDF5/examples/api-c.html)
+[Protocol Buffers C++ Reference](https://developers.google.com/protocol-buffers/docs/reference/cpp)
 
 [KDB+ and q documentation](https://code.kx.com/q/)
 

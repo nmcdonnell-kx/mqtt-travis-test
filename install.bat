@@ -15,8 +15,13 @@ IF NOT EXIST lib (
     EXIT /B
 )
 
+IF NOT EXIST q (
+    ECHO ERROR: Directory 'q' does not exist. Please run from release package
+    EXIT /B
+)
+
 ECHO Copying q script to %QHOME%
-COPY *.q %QHOME%
+COPY q\* %QHOME%
 IF %ERRORLEVEL% NEQ 0 (
     ECHO ERROR: Copy failed
     EXIT /B %ERRORLEVEL%

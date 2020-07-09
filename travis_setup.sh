@@ -1,25 +1,28 @@
 #!/bin/bash
 
-if [ "$TRAVIS_OS_NAME" == "osx" ]; then # use homebrew version
-  brew update
-  brew install hdf5
-  echo "brew install finished"
-else # install from source
-  wget "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.4/src/hdf5-1.10.4.tar.gz"
-  tar -xzf "hdf5-1.10.4.tar.gz"
-  cd "hdf5-1.10.4"
-  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-    ./configure --prefix=/usr/local
-    sudo make install 2>&1 | tail -n200
-  else
-    # Windows build
-    mkdir cmake && cd cmake
-    export HDF5_HOME=$TRAVIS_BUILD_DIR/hdf5_install
-    mkdir $HDF5_HOME
-    cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=$HDF5_HOME ..
+mkdir cbuild
+mkdir cbuild/install
+
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.12.3/protobuf-cpp-3.12.3.tar.gz
+tar xvf protobuf-cpp-3.12.3.tar.gz -C ./cbuild --strip-components=1
+
+if [ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]; then
+    cd cbuild
+    ./configure --prefix=./install "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
+    make
+    make install
+    # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
+    set PATH=./install:$PATH
+    cd ..
+elif [ "$TRAVIS_OS_NAME" == "windows" ]; then
+    mkdir cbuild/cmake/solution
+    cd cbuild/cmake/solution
+    cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=../../install ../..
     cmake --build . --config Release
     cmake --build . --config Release --target install
-    cd ..
-  fi
-  cd ..
+    # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
+    set PATH=../../install:$PATH
+    cd ../../..
+else
+    echo "$TRAVIS_OS_NAME is currently not supported"  
 fi
