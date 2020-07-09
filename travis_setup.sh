@@ -17,7 +17,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   mkdir cbuild/cmake/solution
   cd cbuild/cmake/solution
-  cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=../../install ..
+  cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_CXX_FLAGS="/MP" ..
   cmake --build . --config Release
   cmake --build . --config Release --target install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works

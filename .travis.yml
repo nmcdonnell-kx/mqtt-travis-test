@@ -67,16 +67,18 @@ before_install:
 
   # Make binaries for the library as appropriate
   - if [[ $BUILD == "True" && $TRAVIS_OS_NAME == "windows" ]]; then
-      protoc.exe --version
-      ./cbuild/install/bin/protoc.exe --version
+      which protoc.exe;
+      ./cbuild/install/bin/protoc.exe --version;      
+      protoc.exe --version;
       cd cmake && cmake -G "Visual Studio 15 2017 Win64" .. ;
       cmake --build . --config Release;
       cmake --build . --config Release --target install;
-      cat CMakeFiles/CMakeOutput.log
+      cat CMakeFiles/CMakeOutput.log;
       cd ..;
     elif [[ $BUILD == "True" && ( $TRAVIS_OS_NAME == "linux" || $TRAVIS_OS_NAME == "osx" ) ]]; then
-      protoc --version
-      ./cbuild/install/bin/protoc --version
+      which protoc;
+      ./cbuild/install/bin/protoc --version;
+      protoc --version;
       cd cmake && cmake .. -DCMAKE_BUILD_TYPE=Release && make install && cd .. ;
     fi
 
