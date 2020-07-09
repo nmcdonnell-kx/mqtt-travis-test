@@ -8,7 +8,7 @@ tar xvf protobuf-cpp-3.12.3.tar.gz -C ./cbuild --strip-components=1
 
 if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
   cd cbuild
-  ./configure --prefix={pwd}/install "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
+  ./configure --prefix=$(pwd)/install "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
   make
   make install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
