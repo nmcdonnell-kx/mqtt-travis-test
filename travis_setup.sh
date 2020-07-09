@@ -12,7 +12,7 @@ if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
   make
   make install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
-  set PATH=./install:$PATH
+  set PATH=./install/bin:$PATH
   cd ..
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   mkdir cbuild/cmake/solution
@@ -21,7 +21,7 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   cmake --build . --config Release
   cmake --build . --config Release --target install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
-  set PATH=../../install:$PATH
+  set PATH=../../install/bin:$PATH
   cd ../../..
 else
   echo "$TRAVIS_OS_NAME is currently not supported"  
