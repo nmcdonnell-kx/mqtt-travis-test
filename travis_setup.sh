@@ -8,21 +8,29 @@ tar xvf protobuf-cpp-3.12.3.tar.gz -C ./cbuild --strip-components=1
 
 if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
   cd cbuild
-  ./configure --prefix=/usr/local "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
+  ./configure --prefix=$(pwd)/install "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
   make
   make install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
   export PATH=./install/bin:$PATH
   cd ..
+  pwd
+  ls
+  ls cbuild
+  ls cbuild/install
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
   mkdir cbuild/cmake/solution
   cd cbuild/cmake/solution
-  cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=../../install -DCMAKE_CXX_FLAGS="/MP" ..
+  cmake -G "Visual Studio 15 2017 Win64" -DCMAKE_INSTALL_PREFIX=../../install ..
   cmake --build . --config Release
   cmake --build . --config Release --target install
   # Make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works
   export PATH=../../install/bin:$PATH
   cd ../../..
+  pwd
+  ls
+  ls cbuild
+  ls cbuild/install  
 else
   echo "$TRAVIS_OS_NAME is currently not supported"  
 fi
