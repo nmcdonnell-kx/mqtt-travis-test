@@ -23,7 +23,9 @@ before_install:
   - if [[ $BUILD == "True" ]]; then
       chmod +x travis_setup.sh; 
       ./travis_setup.sh;
-      export BUILD_HOME=$TRAVIS_BUILD_DIR/cbuild
+      export BUILD_HOME=$TRAVIS_BUILD_DIR/cbuild/install;
+      # Make sure the protoc binary is on the path so the cmake functionality to locate the protobuf installation works
+      export PATH=$BUILD_HOME/bin:$PATH;
       export LIB="cmake/$FILE_ROOT/lib";
       mkdir cmake;
     else
@@ -70,15 +72,16 @@ before_install:
       which protoc.exe;
       ./cbuild/install/bin/protoc.exe --version;      
       protoc.exe --version;
+      echo $PATH;
       cd cmake && cmake -G "Visual Studio 15 2017 Win64" .. ;
       cmake --build . --config Release;
       cmake --build . --config Release --target install;
-      cat CMakeFiles/CMakeOutput.log;
       cd ..;
     elif [[ $BUILD == "True" && ( $TRAVIS_OS_NAME == "linux" || $TRAVIS_OS_NAME == "osx" ) ]]; then
       which protoc;
       ./cbuild/install/bin/protoc --version;
       protoc --version;
+      echo $PATH;      
       cd cmake && cmake .. -DCMAKE_BUILD_TYPE=Release && make install && cd .. ;
     fi
 
