@@ -28,12 +28,20 @@ message(STATUS "Generator : ${CMAKE_GENERATOR}")
 message(STATUS "Build Tool : ${CMAKE_BUILD_TOOL}")
 message(STATUS "Proto files: ${MY_PROTO_FILES}")
 
+if(MSVC)
+    add_compile_options(
+        $<$<CONFIG:>:/MT> #---------|
+        $<$<CONFIG:Debug>:/MTd> #---|-- Statically link the runtime libraries
+        $<$<CONFIG:Release>:/MT> #--|
+    )
+endif()
+
 include_directories (
     $ENV{BUILD_HOME}/include 
     ${CMAKE_BINARY_DIR} # For 'k.h', downloaded below
 )
 
-# set(Protobug_DEBUG ON)
+set(Protobuf_DEBUG ON)
 set(Protobuf_USE_STATIC_LIBS ON)
 find_package(Protobuf REQUIRED)
 include_directories(${PROTOBUF_INCLUDE_DIRS})
