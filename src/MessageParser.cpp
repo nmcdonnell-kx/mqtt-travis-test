@@ -110,8 +110,9 @@ K MessageParser::SaveMessage(const std::string& message_type, const std::string&
   if (!msg)
     return krr((S)"Invalid message type");
 
-  auto file_out(std::ofstream(filename, std::ios_base::out | std::ios_base::binary));
-  if (!file_out)
+  std::ofstream file_out;
+  file_out.open(filename, std::ios_base::out | std::ios_base::binary);
+  if (!file_out.is_open())
     return krr((S)"Cannot open file");
 
   static char error_msg[1024];
