@@ -14,7 +14,7 @@ os: linux
 dist: xenial
 
 before_install:
-  - export FILE_ROOT="install"
+  - export FILE_ROOT="protobufkdb"
   - export TESTS="False"
   - export BUILD="True"
 
