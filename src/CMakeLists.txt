@@ -28,14 +28,6 @@ message(STATUS "Generator : ${CMAKE_GENERATOR}")
 message(STATUS "Build Tool : ${CMAKE_BUILD_TOOL}")
 message(STATUS "Proto files: ${MY_PROTO_FILES}")
 
-if(MSVC)
-    add_compile_options(
-        $<$<CONFIG:>:/MT> #---------|
-        $<$<CONFIG:Debug>:/MTd> #---|-- Statically link the runtime libraries
-        $<$<CONFIG:Release>:/MT> #--|
-    )
-endif()
-
 include_directories (
     $ENV{BUILD_HOME}/include 
     ${CMAKE_BINARY_DIR} # For 'k.h', downloaded below
@@ -63,7 +55,7 @@ if (MSVC)
     set(INSTALL_SCRIPT "install.bat")
     file(DOWNLOAD "https://github.com/KxSystems/kdb/raw/master/w64/q.lib" "${CMAKE_BINARY_DIR}/q.lib" )
     set(LINK_LIBS "${CMAKE_BINARY_DIR}/q.lib")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /D WIN32_LEAN_AND_MEAN /D _CRT_SECURE_NO_WARNINGS /D QPROTOBUF_EXPORTS") 
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W3 /D WIN32_LEAN_AND_MEAN /D _CRT_SECURE_NO_WARNINGS /D QPROTOBUF_EXPORTS /MT") 
 else()
     set(INSTALL_SCRIPT "install.sh")
     set(LINK_LIBS "")
