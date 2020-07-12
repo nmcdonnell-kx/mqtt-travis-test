@@ -7,11 +7,12 @@ wget https://github.com/protocolbuffers/protobuf/releases/download/v3.12.3/proto
 tar xvf protobuf-cpp-3.12.3.tar.gz -C ./cbuild --strip-components=1
 
 if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
-  sudo chmod a+rwx /usr/lib/pkgconfig
-  sudo chmod a+rwx -R /usr/lib/pkgconfig
+  sudo chmod a+rwx -R /usr/lib
+  #sudo chmod a+rwx /usr/lib/pkgconfig
+  #sudo chmod a+rwx -R /usr/lib/pkgconfig
   cd cbuild
-  mkdir pkgconfig
-  export PKG_CONFIG_PATH=$(pwd)/pkgconfig:$PKG_CONFIG_PATH
+  #mkdir pkgconfig
+  #export PKG_CONFIG_PATH=$(pwd)/pkgconfig:$PKG_CONFIG_PATH
   ./configure --prefix=/usr "CFLAGS=-fPIC" "CXXFLAGS=-fPIC"
   make
   make install
