@@ -8,6 +8,8 @@ tar xvf protobuf-cpp-3.12.3.tar.gz -C ./cbuild --strip-components=1
 
 if [[ "$TRAVIS_OS_NAME" == "osx" || "$TRAVIS_OS_NAME" == "linux" ]]; then
   sudo chmod a+rwx -R /usr/lib
+  sudo chmod a+rwx -R /usr/bin
+  sudo chmod a+rwx -R /usr/include  
   #sudo chmod a+rwx /usr/lib/pkgconfig
   #sudo chmod a+rwx -R /usr/lib/pkgconfig
   cd cbuild
