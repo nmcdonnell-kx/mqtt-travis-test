@@ -20,17 +20,19 @@ before_install:
 
   # Run instructions to install the C/C++ requirements (BUILD_HOME) set in place of PAHO_HOME/HDF5_HOME etc.
   # Files in this case are unzipped into cbuild within travis_setup.sh
-  # Make sure the protoc binary is on the path so the cmake functionality to locate the protobuf installation works
   - if [[ $BUILD == "True" ]]; then
       chmod +x travis_setup.sh; 
       ./travis_setup.sh;
-      export BUILD_HOME=$TRAVIS_BUILD_DIR/cbuild/install;
-      export PATH=$BUILD_HOME/bin:$PATH;
-      export LD_LIBRARY_PATH=$BUILD_HOME/lib:$LD_LIBRARY_PATH;
       export LIB="cmake/$FILE_ROOT/lib";
       mkdir cmake;
     else
       export LIB="";
+    fi
+    
+  # On Windows, make sure protoc.exe is on the path so the cmake functionality to locate the protobuf installation works    
+  - if [[ $BUILD == "True" && $TRAVIS_OS_NAME == "windows" ]]; then
+      export BUILD_HOME=$TRAVIS_BUILD_DIR/cbuild/install;
+      export PATH=$BUILD_HOME/bin:$PATH;
     fi
 
   - if [[ $TRAVIS_OS_NAME == "linux" ]]; then
@@ -71,19 +73,11 @@ before_install:
 
   # Make binaries for the library as appropriate
   - if [[ $BUILD == "True" && $TRAVIS_OS_NAME == "windows" ]]; then
-      which protoc.exe;
-      ./cbuild/install/bin/protoc.exe --version;      
-      protoc.exe --version;
-      echo $PATH;
       cd cmake && cmake -G "Visual Studio 15 2017 Win64" .. ;
       cmake --build . --config Release;
       cmake --build . --config Release --target install;
       cd ..;
     elif [[ $BUILD == "True" && ( $TRAVIS_OS_NAME == "linux" || $TRAVIS_OS_NAME == "osx" ) ]]; then
-      which protoc;
-      ./cbuild/install/bin/protoc --version;
-      protoc --version;
-      echo $PATH;      
       cd cmake && cmake .. -DCMAKE_BUILD_TYPE=Release && make install && cd .. ;
     fi
 
